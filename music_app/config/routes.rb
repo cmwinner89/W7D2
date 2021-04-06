@@ -4,6 +4,20 @@
 #                     users POST   /users(.:format)                                                                         users#create
 #                  new_user GET    /users/new(.:format)                                                                     users#new
 #                      user GET    /users/:id(.:format)                                                                     users#show
+#                user_bands POST   /users/:user_id/bands(.:format)                                                          bands#create
+#             new_user_band GET    /users/:user_id/bands/new(.:format)                                                      bands#new
+#            edit_user_band GET    /users/:user_id/bands/:id/edit(.:format)                                                 bands#edit
+#                 user_band PATCH  /users/:user_id/bands/:id(.:format)                                                      bands#update
+#                           PUT    /users/:user_id/bands/:id(.:format)                                                      bands#update
+#                           DELETE /users/:user_id/bands/:id(.:format)                                                      bands#destroy
+#                           GET    /users(.:format)                                                                         users#index
+#                           POST   /users(.:format)                                                                         users#create
+#                           GET    /users/new(.:format)                                                                     users#new
+#                 edit_user GET    /users/:id/edit(.:format)                                                                users#edit
+#                           GET    /users/:id(.:format)                                                                     users#show
+#                           PATCH  /users/:id(.:format)                                                                     users#update
+#                           PUT    /users/:id(.:format)                                                                     users#update
+#                           DELETE /users/:id(.:format)                                                                     users#destroy
 #               new_session GET    /session/new(.:format)                                                                   sessions#new
 #                   session DELETE /session(.:format)                                                                       sessions#destroy
 #                           POST   /session(.:format)                                                                       sessions#create
@@ -23,7 +37,11 @@
 
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  resources :users, only: [:show, :new, :create]
+  resources :users, only: [:show, :new, :create] 
+
+  resources :users do
+    resources :bands, only: [:create, :new, :destroy, :edit, :update]
+  end
 
   resource :session, only:[:create, :new, :destroy] 
 

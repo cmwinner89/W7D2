@@ -7,8 +7,8 @@ class BandsController < ApplicationController
     end
 
     def create
+        debugger
         @band = current_user.bands.new(band_params)
-
         if @band.save
             redirect_to bands_url(@band)
         else

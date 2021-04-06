@@ -16,7 +16,15 @@ class User < ApplicationRecord
     validates :email, :session_token, uniqueness: true
     validates :password, length: {minimum: 6, allow_nil: true}
 
+
+    has_many :bands,
+        primary_key: :id,
+        foreign_key: :member_id,
+        class_name: :band
+        
     after_initialize :ensure_session_token
+
+    attr_reader :password
 
     def self.find_by_credentials(email, password)
         user = User.find_by(email: email)
@@ -38,7 +46,7 @@ class User < ApplicationRecord
 
     def password=(password)
         @password = password
-        self.password_digest = Bcrypt::Password.create(password)
+        self.password_digest = BCrypt::Password.create(password)
     end
 
     def reset_session_token!
